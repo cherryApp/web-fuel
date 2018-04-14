@@ -1,3 +1,22 @@
-<p>
-  vehicle works!
-</p>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let key of cols">{{ key | i18nSelect: trList }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td *ngFor="let key of cols">
+            <input class="form-control" type="text" [(ngModel)]="newRow[key]">
+          </td>
+          <td>
+            <button class="btn btn-success" (click)="addVehicle()">új</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
