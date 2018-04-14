@@ -11,6 +11,12 @@ export class TranslateService {
     consumption: "fogyasztás",
     fuelType: "üzemanyag",
     year: "gyártva",
-    add: "új"
+    add: "új",
+    diesel: "dízel",
+    gasoline: "benzin",
+    hybrid: "hibrid",
+    electric: "elektromos",
+    update: "frissít",
+    delete: "töröl"
   };
 }

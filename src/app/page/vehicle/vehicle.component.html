@@ -3,17 +3,52 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th *ngFor="let key of cols">{{ key | i18nSelect: trList }}</th>
+          <th *ngFor="let col of cols">{{ col.key | i18nSelect: trList }}</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td *ngFor="let key of cols">
-            <input class="form-control" type="text" [(ngModel)]="newRow[key]">
+          <td *ngFor="let col of cols">
+            <input *ngIf="col.type != 'select'"
+              class="form-control" type="text"
+              [type]="col.type"
+              [(ngModel)]="newRow[col.key]">
+            <select *ngIf="col.type == 'select'"
+              class="form-control" [(ngModel)]="newRow[col.key]">
+                <option *ngFor="let option of col.options" [value]="option">
+                  {{ option | i18nSelect: trList }}
+                </option>
+            </select>
           </td>
           <td>
-            <button class="btn btn-success" (click)="addVehicle()">új</button>
+            <button class="btn btn-success" (click)="addVehicle()">
+              {{ 'add' | i18nSelect: trList }}
+            </button>
+          </td>
+        </tr>
+        <tr *ngFor="let row of list">
+          <td *ngFor="let col of cols">
+            <input *ngIf="col.type != 'select'"
+              class="form-control" type="text"
+              [type]="col.type"
+              [(ngModel)]="row.vehicle[col.key]">
+            <select *ngIf="col.type == 'select'"
+              class="form-control" [(ngModel)]="row.vehicle[col.key]">
+                <option *ngFor="let option of col.options" [value]="option">
+                  {{ option | i18nSelect: trList }}
+                </option>
+            </select>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button (click)="onUpdate(row)" class="btn btn-info">
+                {{ 'update' | i18nSelect: trList }}
+              </button>
+              <button (click)="onDelete(row)" class="btn btn-info">
+                {{ 'delete' | i18nSelect: trList }}
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
