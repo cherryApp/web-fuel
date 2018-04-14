@@ -6,16 +6,13 @@ export class Vehicle {
   fuelType: string;
   year: string;
 
-  constructor(options: {} = {}) {
-    for (let k in options) {
-      if(options[k] && options[k] !== false) {
-        this[k] = options[k];
-      } else if (options === false) {
-        this[k] = false;
-      } else {
-        this[k] = "";
-      }
-    }
+  constructor(options: any = {}) {
+    this.lp = options.lp || "";
+    this.manufacturer = options.manufacturer || "";
+    this.type = options.type || "";
+    this.consumption = options.consumption || "";
+    this.fuelType = options.fuelType || "";
+    this.year = options.year || "";
   }
 }
 

@@ -17,6 +17,16 @@ export class TranslateService {
     hybrid: "hibrid",
     electric: "elektromos",
     update: "frissít",
-    delete: "töröl"
+    delete: "töröl",
+    driverId: "vezető",
+    vehicleLp: "rendszám",
+    time: "időpont",
+    amount: "mennyiség",
+    name: "név",
+    email: "email",
+    phone: "telefon",
+    birthDate: "szül.",
+    address: "cím",
+    vehicleId: "rendszám"
   };
 }

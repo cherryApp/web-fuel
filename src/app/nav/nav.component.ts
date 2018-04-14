@@ -7,8 +7,9 @@ import { ConfigService } from '../service/config.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  constructor(private config: ConfigService) {
-
+  myConfig: any;
+  constructor(config: ConfigService) {
+    this.myConfig = config;
   }
 
   ngOnInit() {

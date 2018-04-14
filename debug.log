@@ -1,0 +1,6 @@
+[0415/003034.785:ERROR:process_info.cc(329)] VirtualQueryEx: A hozzáférés megtagadva. (0x5)
+[0415/003034.786:ERROR:process_info.cc(550)] ReadMemoryInfo failed
+[0415/003034.788:ERROR:process_reader_win.cc(151)] SuspendThread: A hozzáférés megtagadva. (0x5)
+[0415/003034.788:ERROR:exception_snapshot_win.cc(88)] thread ID 10272 not found in process
+[0415/003034.788:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0415/003034.788:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Kísérlet történt egy éppen kilépõ folyamat elérésére. (0xc000010a)

@@ -14,7 +14,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
 import { NavComponent } from './nav/nav.component';
-import { ConfigService } from './service/config.service';
+import { ConfigService, AppRouting, FirebaseSettings } from './service/config.service';
 import { HomeComponent } from './page/home/home.component';
 import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { FuelingComponent } from './page/fueling/fueling.component';
@@ -22,6 +22,10 @@ import { StatComponent } from './page/stat/stat.component';
 import { SettingsComponent } from './page/settings/settings.component';
 import { VehicleService } from './service/vehicle.service';
 import { TransPipe } from './pipe/trans.pipe';
+import { TableComponent } from './table/table.component';
+import { FuelingService } from './service/fueling.service';
+import { DriverComponent } from './page/driver/driver.component';
+import { DriverService } from './service/driver.service';
 
 const cService: ConfigService = new ConfigService();
 
@@ -34,12 +38,14 @@ const cService: ConfigService = new ConfigService();
     FuelingComponent,
     StatComponent,
     SettingsComponent,
-    TransPipe
+    TransPipe,
+    TableComponent,
+    DriverComponent
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(cService.routing),
-    AngularFireModule.initializeApp(cService.firebaseSettings),
+    RouterModule.forRoot(AppRouting),
+    AngularFireModule.initializeApp(FirebaseSettings),
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
@@ -49,7 +55,9 @@ const cService: ConfigService = new ConfigService();
   ],
   providers: [
     ConfigService,
-    VehicleService
+    VehicleService,
+    FuelingService,
+    DriverService
   ],
   bootstrap: [AppComponent]
 })

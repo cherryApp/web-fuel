@@ -1,11 +1,12 @@
 <div class="row">
   <div class="col-12">
     <app-table
+      *ngIf="list"
       [dataList]="list"
       [cols]="cols"
       [trList]="trList"
-      [subObject]="'vehicle'"
-      (add)="addVehicle($event)"
+      [subObject]="'driver'"
+      (add)="onAdd($event)"
       (update)="onUpdate($event)"
       (remove)="onDelete($event)">
     </app-table>

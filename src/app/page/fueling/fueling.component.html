@@ -1,3 +1,15 @@
-<p>
-  fueling works!
-</p>
+<div class="row">
+  <div class="col-12">
+    <app-table
+      *ngIf="list"
+      [dataList]="list"
+      [cols]="cols"
+      [colList]="cols"
+      [trList]="trList"
+      [subObject]="'fueling'"
+      (add)="onAdd($event)"
+      (update)="onUpdate($event)"
+      (remove)="onDelete($event)">
+    </app-table>
+  </div>
+</div>

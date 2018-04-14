@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { VehicleService } from '../../service/vehicle.service';
-import { Observable } from '@firebase/util';
+import { Observable, Subscribe } from '@firebase/util';
 import { TranslateBase } from '../../service/translate.base';
 import { Fuels, Vehicle } from '../../model/vehicle';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.css']
 })
-export class VehicleComponent extends TranslateBase implements OnInit {
-  list: Array<Vehicle> = [];
+export class VehicleComponent extends TranslateBase
+  implements OnInit, OnDestroy {
+  list: Vehicle[];
   newRow: any = {};
+  listSubscribe: Subscription;
   cols: Array<{}> = [
     {key: "lp", type: "text"},
     {key: "manufacturer", type: "text"},
@@ -23,24 +26,24 @@ export class VehicleComponent extends TranslateBase implements OnInit {
   ];
   constructor(private vService: VehicleService) {
     super();
-    this.vService.all.subscribe(
-      values => {
-        console.log(values);
-        this.list = values;
-        console.log(this.list);
-      },
-      err => console.error(err),
-      () => console.log("vehicle subject ended")
-    );
+    this.list = vService.list;
   }
 
   ngOnInit() {
+    this.listSubscribe = this.vService.all.subscribe(
+      list => this.list = this.vService.list
+    );
   }
 
-  addVehicle(): void {
-    console.log(this.newRow);
-    this.vService.add(this.newRow).then(
-      ok => console.log(ok),
+  ngOnDestroy() {
+    this.listSubscribe.unsubscribe();
+  }
+
+  addVehicle(row): void {
+    this.vService.add(row).then(
+      ok => {
+        console.log("Vehicle created.", ok);
+      },
       err => console.error(err)
     );
   }

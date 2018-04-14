@@ -1,0 +1,72 @@
+<table *ngIf="list && cols" class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let col of cols">{{ col.key | i18nSelect: trList }}</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td *ngFor="let col of cols">
+        <input *ngIf="col.type != 'select'"
+          class="form-control" type="text"
+          [type]="col.type"
+          [(ngModel)]="newRow[col.key]">
+        <select *ngIf="col.type == 'select'"
+          class="form-control" [(ngModel)]="newRow[col.key]">
+            <option *ngFor="let option of col.options"
+              [value]="getOptionValue(option)">
+                <span *ngIf="option.exact">
+                    {{ getOptionLabel(option) }}
+                </span>
+                <span *ngIf="!option.exact">
+                    {{ getOptionLabel(option) | i18nSelect: trList }}
+                </span>
+            </option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-success" (click)="addRow()"
+          title="{{ 'add' | i18nSelect: trList }}">
+          <i class="fa fa-plus"></i>
+        </button>
+      </td>
+    </tr>
+    <tr *ngFor="let row of list">
+      <td *ngFor="let col of cols">
+        <input *ngIf="col.type != 'select'"
+        class="form-control" type="text"
+        [type]="col.type"
+        [ngModel]="getModel(row, col.key)"
+        (ngModelChange)="setModel($event, row, col.key)">
+        <select *ngIf="col.type == 'select'"
+            class="form-control"
+            [ngModel]="getModel(row, col.key)"
+            (ngModelChange)="setModel($event, row, col.key)">
+              <option
+                *ngFor="let option of col.options"
+                [value]="getOptionValue(option)">
+                  <span *ngIf="option.exact">
+                      {{ getOptionLabel(option) }}
+                  </span>
+                  <span *ngIf="!option.exact">
+                      {{ getOptionLabel(option) | i18nSelect: trList }}
+                  </span>
+              </option>
+        </select>
+  </td>
+  <td>
+    <div class="btn-group">
+          <button (click)="updateRow(row)" class="btn btn-info"
+            title="{{ 'update' | i18nSelect: trList }}">
+            <i class="fa fa-refresh"></i>
+          </button>
+          <button (click)="deleteRow(row)" class="btn btn-danger"
+            title="{{ 'delete' | i18nSelect: trList }}">
+              <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
