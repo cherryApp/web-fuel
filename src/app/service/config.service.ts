@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Routes } from '@angular/router';
 import { HomeComponent } from '../page/home/home.component';
 import { FuelingComponent } from '../page/fueling/fueling.component';
@@ -6,9 +6,19 @@ import { VehicleComponent } from '../page/vehicle/vehicle.component';
 import { StatComponent } from '../page/stat/stat.component';
 import { SettingsComponent } from '../page/settings/settings.component';
 import { DriverComponent } from '../page/driver/driver.component';
+import { LoginComponent } from '../login/login.component';
+import { Observable } from 'rxjs/Observable';
+import { merge } from 'rxjs/observable/merge';
+import { of } from 'rxjs/observable/of';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class ConfigService {
+export class ConfigService implements OnInit{
+  // Az Observable az alkalmazás online/offline állapotát figyeli.
+  private online: Observable<any>;
+  onlineStatus: Subject<boolean> = new Subject();
+
   // Az alkalmazás címsorában megjelenő szöveg.
   appTitle: string = "WebFuel";
 
@@ -18,7 +28,26 @@ export class ConfigService {
     password: "webfuel"
   };
 
-  constructor() { }
+  constructor() {
+    this.online = merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').map(o => o),
+      fromEvent(window, 'offline').map(o => o)
+    );
+    this.online.subscribe(
+      ev => {
+        if (ev === true || ev.type === 'online') {
+          this.onlineStatus.next(true);
+        } else {
+          this.onlineStatus.next(false);
+        }
+      }
+    );
+  }
+
+  ngOnInit() {
+
+  }
 
 }
 
@@ -47,6 +76,10 @@ export const AppRouting: Routes = [
   {
     path: "settings",
     component: SettingsComponent
+  },
+  {
+    path: "login",
+    component: LoginComponent
   },
   {
     path: "**",

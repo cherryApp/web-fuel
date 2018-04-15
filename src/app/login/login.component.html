@@ -1,0 +1,38 @@
+<div class="card border-secondary mb-3" style="max-width: 20rem;">
+    <div class="card-header">Belépés</div>
+    <div class="card-body">
+      <form #loginForm="ngForm" method="post" (ngSubmit)="signInWithEmail()">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email cím</label>
+            <input
+                id="contactemail"
+                class="form-control"
+                name="email"
+                type="text"
+                #ce="ngModel"
+                [(ngModel)]="loginData.email"
+                required
+                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+            <div class="error-message" [hidden]="ce.valid || ce.untouched">
+              Hibás email cím.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Jelszó</label>
+            <input type="password" class="form-control"
+              id="exampleInputPassword1" placeholder="Jelszó"
+              name="password" [(ngModel)]="loginData.password"
+              #pw="ngModel"
+              required
+              pattern="^.{7,}$">
+            <div class="error-message" [hidden]="pw.valid || pw.pristine">
+              Kis, nagybetű és szám, legalább hét karakter.
+            </div>
+        </div>
+        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary">
+          belépés
+        </button>
+      </form>
+    </div>
+  </div>
+

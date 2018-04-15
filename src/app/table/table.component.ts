@@ -17,7 +17,7 @@ export class TableComponent implements OnInit {
   @Input() trList: any;
   @Input() subObject: string;
   @Input() set colList(list) {
-    console.log("colList", list);
+    //
   }
 
   // Események.
@@ -57,7 +57,6 @@ export class TableComponent implements OnInit {
   }
 
   updateRow(row): void {
-    console.log("update start", row);
     this.update.emit(row);
   }
 

@@ -1,0 +1,10 @@
+.card {
+  float: none; /* Added */
+  margin: 0 auto; /* Added */
+  margin-bottom: 10px; /* Added */
+  margin-top: 30px;
+}
+.error-message {
+  color: rgb(182, 8, 8);
+  font-style: italic;
+}

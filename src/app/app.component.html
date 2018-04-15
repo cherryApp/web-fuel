@@ -1,7 +1,18 @@
 <app-nav></app-nav>
+<div class="clearfix">&nbsp;</div>
 <div class="container">
-  <div class="col-xs-12 col-md-10 offset-md-1">
-    <router-outlet></router-outlet>
+  <div class="row" *ngIf="!onlineStatus">
+    <div class="col-xs-12 col-md-10 offset-md-1">
+      <div class="alert alert-danger">
+        <strong>Nincs internet kapcsolat!</strong>
+        Az alkalmazás működéséhez internet kapcsolat szükséges.
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-10 offset-md-1">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 <footer class="footer">

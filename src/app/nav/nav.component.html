@@ -5,7 +5,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
+    <ul *ngIf="user" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}">
         <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
@@ -19,13 +19,11 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/driver">Sofőrök</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/stat">Statisztika</a>
-      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <button *ngIf="user" (click)="onSignOut()"
+      class="btn btn-info my-2 my-sm-0" type="button">
+        kilépés
+      <i class="fa fa-sign-out"></i>
+    </button>
   </div>
 </nav>
