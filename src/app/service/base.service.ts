@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { Subject } from 'rxjs/Subject';
 import { ThenableReference } from '@firebase/database-types';
-import { map } from 'rxjs/operator/map';
+import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -18,17 +18,22 @@ export class BaseService {
 
   constructor(protected db: AngularFireDatabase, protected endPoint: string) {
     this.listRef = this.db.list(this.endPoint);
-    this.all = this.db.object(this.endPoint).valueChanges().map(
-      values => {
-        this.list = [];
-        for (let k in values) {
-          let row = {key: k};
-          row[this.endPoint] = values[k];
-          this.list.push(row);
-        }
-        return this.list;
-      }
-    )
+    this.all = this.db.object(this.endPoint).valueChanges()
+      .pipe(
+        tap( values => console.log("before", values) ),
+        map( values => {
+          this.list = [];
+          for (let k in values) {
+            let row = {key: k};
+            row[this.endPoint] = values[k];
+            this.list.push(row);
+          }
+          return this.list;
+        }),
+        tap( values => console.log("after", values) )
+      );
+
+    this.test = this.db.list(this.endPoint).snapshotChanges();
   }
 
   add(row: any): ThenableReference {

@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class VehicleComponent extends TranslateBase
   implements OnInit, OnDestroy {
   list: Vehicle[];
+  test: any = {};
   newRow: any = {};
   listSubscribe: Subscription;
   cols: Array<{}> = [
@@ -33,6 +34,7 @@ export class VehicleComponent extends TranslateBase
     this.listSubscribe = this.vService.all.subscribe(
       list => this.list = this.vService.list
     );
+    this.test = this.vService.test;
   }
 
   ngOnDestroy() {
@@ -56,6 +58,10 @@ export class VehicleComponent extends TranslateBase
   onDelete(row): void {
     console.log("delete", row);
     this.vService.remove(row);
+  }
+
+  trackByFn(item) {
+    return Math.round(Math.random()*Math.pow(10, 10));
   }
 
 }

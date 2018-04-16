@@ -11,3 +11,13 @@
     </app-table>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-12">
+    <ul>
+      <li *ngFor="let row of test | async">
+        {{ row.key }}, {{ row.payload.val() | json }}
+      </li>
+    </ul>
+  </div>
+</div>
