@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { concat } from 'rxjs/observable/concat';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { zip } from 'rxjs/observable/zip';
 import 'rxjs/add/observable/from';
 import { ForkJoinObservable } from 'rxjs/observable/ForkJoinObservable';
 import { DriverService } from '../../service/driver.service';
@@ -22,11 +23,7 @@ export class StatComponent implements OnInit {
 
   @ViewChild('cchart') cchart;
 
-  allData: {drivers: Driver[], vehicles: Vehicle[], fuelings: Fueling[]} = {
-    drivers: [],
-    vehicles: [],
-    fuelings: []
-  };
+  allData: any[] = [];
 
   pieChartData =  {
     chartType: 'PieChart',
@@ -60,23 +57,14 @@ export class StatComponent implements OnInit {
   }
 
   ngOnInit() {
-    merge(
+    zip(
       this.vService.all,
       this.dService.all,
       this.fService.all
     ).subscribe(
-      d => {
-        if (d[0]) {
-          if (d[0].driver) {
-            this.allData.drivers = d;
-          } else if (d.vehicle) {
-            this.allData.vehicles = d;
-          } else if (d.fueling) {
-            this.allData.fuelings = d;
-          }
-        }
-      }
+      zipData => this.allData = zipData
     );
+
   }
 
 }

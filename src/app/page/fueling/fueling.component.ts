@@ -39,7 +39,10 @@ export class FuelingComponent extends TranslateBase implements OnInit {
 
   ngOnInit() {
     this.listSubscribe = this.fService.all.subscribe(
-      list => this.list = this.fService.list
+      list => {
+        this.list = this.fService.list;
+        console.log(list);
+      }
     );
     this.vSubscribe = this.vService.all.subscribe(
       list => {
