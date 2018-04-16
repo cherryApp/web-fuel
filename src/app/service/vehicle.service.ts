@@ -16,6 +16,7 @@ export class VehicleService extends BaseService {
     this.all.subscribe( list => {
       this.vOptions = [];
       list.forEach(element => {
+        console.log(element);
         this.vOptions.push(
           {value: element.key, label: element.vehicle.lp, exact: true}
         );

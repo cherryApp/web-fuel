@@ -18,9 +18,8 @@ export class BaseService {
 
   constructor(protected db: AngularFireDatabase, protected endPoint: string) {
     this.listRef = this.db.list(this.endPoint);
-    this.all = this.listRef.valueChanges().map(
+    this.all = this.db.object(this.endPoint).valueChanges().map(
       values => {
-        console.log("map values", values);
         this.list = [];
         for (let k in values) {
           let row = {key: k};
