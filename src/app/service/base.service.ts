@@ -20,8 +20,8 @@ export class BaseService {
     this.listRef = this.db.list(this.endPoint);
     this.all = this.db.object(this.endPoint).valueChanges()
       .pipe(
-        tap( values => console.log("before", values) ),
         map( values => {
+          console.log(values);
           this.list = [];
           for (let k in values) {
             let row = {key: k};
@@ -29,8 +29,7 @@ export class BaseService {
             this.list.push(row);
           }
           return this.list;
-        }),
-        tap( values => console.log("after", values) )
+        })
       );
 
     this.test = this.db.list(this.endPoint).snapshotChanges();

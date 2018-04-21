@@ -12,6 +12,7 @@ export class NavComponent implements OnInit, OnDestroy {
   myConfig: any;
   authSubscribe: Subscription;
   user: any;
+  collapsed: boolean = true;
   constructor(
     config: ConfigService,
     private authService: AuthService
@@ -32,6 +33,10 @@ export class NavComponent implements OnInit, OnDestroy {
 
   onSignOut(): void {
     this.authService.signOut();
+  }
+
+  toggleNav(): void {
+    this.collapsed = !this.collapsed;
   }
 
 }
