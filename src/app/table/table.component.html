@@ -61,7 +61,16 @@
             title="{{ 'update' | i18nSelect: trList }}">
             <i class="fa fa-refresh"></i>
           </button>
-          <button (click)="deleteRow(row)" class="btn btn-danger"
+          <button
+            mwlConfirmationPopover
+            [popoverTitle]="'Megerősítés'"
+            [popoverMessage]="'Biztosan törli az adatokat?'"
+            placement="left"
+            [confirmText]="'törlés'"
+            [cancelText]="'mégsem'"
+            (confirm)="deleteRow(row)"
+            (cancel)="cancelClicked = true"
+            class="btn btn-danger"
             title="{{ 'delete' | i18nSelect: trList }}">
               <i class="fa fa-trash"></i>
           </button>

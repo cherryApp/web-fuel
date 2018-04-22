@@ -21,7 +21,6 @@ export class BaseService {
     this.all = this.db.object(this.endPoint).valueChanges()
       .pipe(
         map( values => {
-          console.log(values);
           this.list = [];
           for (let k in values) {
             let row = {key: k};

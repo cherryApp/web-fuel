@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FuelingService } from '../../service/fueling.service';
 import { Observable, Subscribe } from '@firebase/util';
 import { TranslateBase } from '../../service/translate.base';
@@ -8,19 +8,18 @@ import { Subscription } from 'rxjs/Subscription';
 import { Fueling } from '../../model/fueling';
 import { VehicleService } from '../../service/vehicle.service';
 import { DriverService } from '../../service/driver.service';
+import { ToastsManager } from 'ng2-toastr';
 
 @Component({
   selector: 'app-fueling',
   templateUrl: './fueling.component.html',
   styleUrls: ['./fueling.component.css']
 })
-export class FuelingComponent extends TranslateBase implements OnInit {
-  list: Fueling[] = [];
-  listSubscribe: Subscription;
+export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
   vSubscribe: Subscription;
   vList: Vehicle[] = [];
   vOptions: any[] = [];
-  cols: Array<{key: string, type: string, options?: any[]}> = [
+  cols = [
     {key: "vehicleId", type: "select", options: []},
     {key: "driverId", type: "select", options: []},
     {key: "time", type: "date"},
@@ -29,9 +28,13 @@ export class FuelingComponent extends TranslateBase implements OnInit {
   constructor(
     private fService: FuelingService,
     private vService: VehicleService,
-    private dService: DriverService
+    private dService: DriverService,
+    toaster: ToastsManager,
+    vcr: ViewContainerRef
   ) {
-    super();
+    super(toaster, vcr);
+    this.dataService = fService;
+    this.entityName = 'tankolás';
     this.list = fService.list;
     this.cols[0].options = vService.vOptions;
     this.cols[1].options = dService.vOptions;
@@ -58,24 +61,4 @@ export class FuelingComponent extends TranslateBase implements OnInit {
     this.listSubscribe.unsubscribe();
     this.vSubscribe.unsubscribe();
   }
-
-  onAdd(row): void {
-    this.fService.add(row).then(
-      ok => {
-        console.log("Fueling created.", ok);
-      },
-      err => console.error(err)
-    );
-  }
-
-  onUpdate(row): void {
-    console.log("update", row);
-    this.fService.update(row);
-  }
-
-  onDelete(row): void {
-    console.log("delete", row);
-    this.fService.remove(row);
-  }
-
 }

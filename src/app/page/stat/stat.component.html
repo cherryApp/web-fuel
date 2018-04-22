@@ -1,1 +1,21 @@
+<h3>Szűrés</h3>
+<div class="row">
+  <div class="col-4 col-xs-12">
+    <label for="driver-select">sofőrök</label>
+    <select id="driver-select" [(ngModel)]="filterObject.driverID" class="form-control">
+      <option value="notset">nincs kiválasztva</option>
+      <option *ngFor="let option of driverList" [value]="option.key">
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+  <div class="col-4 col-xs-12">
+    <label for="start-date">Kezdő dátum</label>
+    <input [(ngModel)]="filterObject.startDate" type="date" id="start-date" class="form-control">
+  </div>
+  <div class="col-4 col-xs-12">
+      <label for="end-date">Záró dátum</label>
+      <input [(ngModel)]="filterObject.endDate" type="date" id="end-date" class="form-control">
+  </div>
+</div>
 <google-chart #cchart [data]="pieChartData"></google-chart>

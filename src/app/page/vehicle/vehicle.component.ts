@@ -12,14 +12,8 @@ import { ToastsManager } from 'ng2-toastr';
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.css']
 })
-export class VehicleComponent extends TranslateBase
+export class VehicleComponent extends TranslateBase<Vehicle>
   implements OnInit, OnDestroy {
-  list: Vehicle[];
-  test: any = {};
-  newRow: any = {};
-  signToDelete: any;
-  listSubscribe: Subscription;
-
   deleteMessage: string = `
     <div><span>Biztosan törli?</span></div>
     <div class="row">
@@ -32,7 +26,7 @@ export class VehicleComponent extends TranslateBase
     </div>
   `;
 
-  cols: Array<{}> = [
+  cols = [
     {key: "lp", type: "text"},
     {key: "manufacturer", type: "text"},
     {key: "type", type: "text"},
@@ -42,65 +36,22 @@ export class VehicleComponent extends TranslateBase
   ];
   constructor(
     private vService: VehicleService,
-    private toaster: ToastsManager,
-    private vcr: ViewContainerRef
+    toaster: ToastsManager,
+    vcr: ViewContainerRef
   ) {
-    super();
+    super(toaster, vcr);
+    this.dataService = vService;
+    this.entityName = 'sofőr';
     this.list = vService.list;
-    console.log( vcr.element.nativeElement );
-    this.toaster.setRootViewContainerRef(vcr);
   }
 
   ngOnInit() {
     this.listSubscribe = this.vService.all.subscribe(
       list => this.list = this.vService.list
     );
-    this.test = this.vService.test;
-    const self = this;
-    window.addEventListener( 'click', (ev) => {
-      self.toastListener(ev);
-    })
   }
 
   ngOnDestroy() {
     this.listSubscribe.unsubscribe();
   }
-
-  addVehicle(row): void {
-    this.vService.add(row)
-      .then(
-        ok => this.toaster.success('Új jármű létrehozva', 'Sikeres művelet'),
-        err => this.toaster.error('A jármű nem jött létre.', 'Hiba')
-      );
-  }
-
-  onUpdate(row): void {
-    this.vService.update(row)
-      .then( ok => this.toaster.success('Jármű frissítve', 'Frissítve') )
-      .catch( err => this.toaster.error('A jármű nem frissült.', 'Hiba') );
-  }
-
-  onDelete(row): void {
-    this.signToDelete = row;
-    this.toaster.info(this.deleteMessage, null,
-      { enableHTML: true, dismiss: 'controlled' }
-    ).then( res => console.log(res) );
-  }
-
-  confirmedDelete(): void {
-    this.vService.remove(this.signToDelete)
-      .then( ok => this.toaster.success('Jármű törölve', 'Törölve') )
-      .catch( err => this.toaster.error('A jármű nem törlődött.', 'Hiba') );
-  }
-
-  toastListener(ev: MouseEvent): void {
-    if ( (ev.target as Element).classList.contains('toast-ok-btn') ) {
-      this.confirmedDelete();
-    }
-  }
-
-  trackByFn(item) {
-    return Math.round(Math.random()*Math.pow(10, 10));
-  }
-
 }

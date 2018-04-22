@@ -12,6 +12,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -58,6 +59,9 @@ import { ChartDataService } from './service/chart-data.service';
     FormsModule,
     Ng2GoogleChartsModule,
     ToastModule.forRoot(),
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger'
+    }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
