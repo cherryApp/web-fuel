@@ -75,7 +75,9 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
   ngDoCheck() {
     var changes = this.filterDiffer.diff(this.filterObject); // check for changes
     if (changes) {
-      this.chartType = this.filterObject.driverID != 'notset'
+      this.chartType =
+      this.filterObject.driverID != 'notset' || this.filterObject.startDate ||
+        this.filterObject.endDate
         ? 'ColumnChart'
         : 'PieChart';
       this.createChartData();
@@ -102,8 +104,27 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
         'height': 600
       }
     };
-    console.log(chartData);
+
     this.pieChartData = chartData;
+  }
+
+  applyFilters(fuelings: Array<any>): Array<any> {
+    return fuelings.filter( item => {
+      let out = true;
+      if (this.filterObject.driverID != 'notset' &&
+          this.filterObject.driverID != item.fueling.driverId) {
+            out = false;
+          }
+      if (this.filterObject.startDate &&
+          this.filterObject.startDate > item.fueling.time) {
+            out = false;
+          }
+      if (this.filterObject.endDate &&
+          this.filterObject.endDate < item.fueling.time) {
+            out = false;
+          }
+      return out;
+    });
   }
 
   getConsumptionPerDriver(): Array<any> {
@@ -122,10 +143,10 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     let fueling: Array<any> = [
       ['Időpont', 'Üzemanyag mennyisége']
     ];
-    this.allData.fuelings.forEach(item => {
-      let fueling = [];
-      if (!this.checkDriverAndTimes(this.filterObject.driverID, item.fueling))
-        return true;
+
+    let fuelingData: Array<any> = this.applyFilters(this.allData.fuelings);
+
+    fuelingData.forEach(item => {
       fueling.push(
         [
           item.fueling.time,
@@ -133,20 +154,16 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
         ]
       );
     });
-    return fueling;
-  }
 
-  checkDriverAndTimes(driverID: string, item: any): boolean {
-    let out = true;
-    if (this.filterObject.driverID != driverID) out = false;
-    if (this.filterObject.startDate && this.filterObject.startDate > item.time) out = false;
-    if (this.filterObject.endDate && this.filterObject.endDate < item.time) out = false;
-    return out;
+    return fueling;
   }
 
   getFueling(driverKey): any {
     let fueling: any = 0;
-    this.allData.fuelings.forEach(item => {
+
+    let fuelingData: Array<any> = this.applyFilters(this.allData.fuelings);
+
+    fuelingData.forEach(item => {
       if (item.fueling.driverId == driverKey) {
         fueling += parseInt(item.fueling.amount);
       }

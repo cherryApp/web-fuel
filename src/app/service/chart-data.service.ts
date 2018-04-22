@@ -31,8 +31,6 @@ export class ChartDataService {
       this.fService.all
     ).subscribe(
       zipData => {
-        console.log('zipData', zipData);
-
         this.cachedData.drivers = zipData[1];
         this.cachedData.fuelings = zipData[2];
         this.cachedData.vehicles = zipData[0];

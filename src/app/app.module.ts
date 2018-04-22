@@ -32,6 +32,7 @@ import { DriverService } from './service/driver.service';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './service/auth.service';
 import { ChartDataService } from './service/chart-data.service';
+import { StatFilterPipe } from './pipe/stat-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ChartDataService } from './service/chart-data.service';
     TransPipe,
     TableComponent,
     DriverComponent,
-    LoginComponent
+    LoginComponent,
+    StatFilterPipe
   ],
   imports: [
     BrowserModule,
