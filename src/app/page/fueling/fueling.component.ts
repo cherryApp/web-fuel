@@ -19,12 +19,6 @@ export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
   vSubscribe: Subscription;
   vList: Vehicle[] = [];
   vOptions: any[] = [];
-  cols = [
-    {key: "vehicleId", type: "select", options: []},
-    {key: "driverId", type: "select", options: []},
-    {key: "time", type: "date"},
-    {key: "amount", type: "number"}
-  ];
   constructor(
     private fService: FuelingService,
     private vService: VehicleService,
@@ -36,8 +30,12 @@ export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
     this.dataService = fService;
     this.entityName = 'tankolás';
     this.list = fService.list;
-    this.cols[0].options = vService.vOptions;
-    this.cols[1].options = dService.vOptions;
+    this.cols = [
+      {key: "vehicleId", type: "select", options: this.vService.vOptions},
+      {key: "driverId", type: "select", options: this.dService.vOptions},
+      {key: "time", type: "date"},
+      {key: "amount", type: "number"}
+    ];
   }
 
   ngOnInit() {
@@ -49,11 +47,18 @@ export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
     );
     this.vSubscribe = this.vService.all.subscribe(
       list => {
-        this.cols[0].options = this.vService.vOptions;
+        console.log(this.vService.vOptions);
+        this.cols[0] = {
+          key: "vehicleId", type: "select", options: this.vService.vOptions
+        };
       }
     );
     this.dService.all.subscribe(
-      list => this.cols[1].options = this.dService.vOptions
+      list => {
+        this.cols[1] = {
+          key: "driverId", type: "select", options: this.dService.vOptions
+        };
+      }
     )
   }
 

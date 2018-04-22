@@ -4,7 +4,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class FuelingService extends BaseService {
-
+  endPoint: string = 'fueling';
   constructor(db: AngularFireDatabase) {
     super(db, 'fueling');
   }

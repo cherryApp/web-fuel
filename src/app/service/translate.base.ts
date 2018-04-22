@@ -5,15 +5,15 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class TranslateBase<T> {
   trList: {} = TranslateService.huHU;
-  protected list: T[] = [];
-  protected listSubscribe: Subscription;
-  protected cols: Array<{key: string, type: string, options?: any[]}>;
-  protected dataService: any;
-  protected entityName: string;
+  public list: T[] = [];
+  public listSubscribe: Subscription;
+  public cols: Array<any>;
+  public dataService: any;
+  public entityName: string;
 
   constructor(
-    protected toaster: ToastsManager,
-    protected vcr: ViewContainerRef
+    public toaster: ToastsManager,
+    public vcr: ViewContainerRef
   ) {
     this.toaster.setRootViewContainerRef(vcr);
   }

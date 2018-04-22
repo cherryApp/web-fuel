@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class DriverService extends BaseService {
-
+  endPoint: string = 'driver';
   vOptions: any[] = [];
   allOptions: Subject<any> = new Subject();
 
