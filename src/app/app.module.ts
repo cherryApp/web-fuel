@@ -63,8 +63,8 @@ import { StatFilterPipe } from './pipe/stat-filter.pipe';
     ToastModule.forRoot(),
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger'
-    }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    })
+    // ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     AuthService,
