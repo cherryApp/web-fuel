@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FuelingService } from '../../service/fueling.service';
-import { Observable, Subscribe } from '@firebase/util';
 import { TranslateBase } from '../../service/translate.base';
 import { Fuels, Vehicle } from '../../model/vehicle';
 import { Subject } from 'rxjs/Subject';
@@ -10,15 +9,28 @@ import { VehicleService } from '../../service/vehicle.service';
 import { DriverService } from '../../service/driver.service';
 import { ToastsManager } from 'ng2-toastr';
 
+/**
+ * A tankolásokat kezelő komponens.
+ */
 @Component({
   selector: 'app-fueling',
   templateUrl: './fueling.component.html',
   styleUrls: ['./fueling.component.css']
 })
 export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
+  /**
+   * Feliratkozás a Vehicle lista változásaira.
+   */
   vSubscribe: Subscription;
-  vList: Vehicle[] = [];
-  vOptions: any[] = [];
+
+  /**
+   *
+   * @param fService tankolások szolgáltatása.
+   * @param vService járművek szolgáltatása.
+   * @param dService sofőrök szolgáltatása.
+   * @param toaster toast üzenetek megjelenítése.
+   * @param vcr a megjelenítő konténer.
+   */
   constructor(
     private fService: FuelingService,
     private vService: VehicleService,
@@ -38,6 +50,9 @@ export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
     ];
   }
 
+  /**
+   * Inicializáció során iratkozunk fel az entitások módosulásaira.
+   */
   ngOnInit() {
     this.listSubscribe = this.fService.all.subscribe(
       list => {
@@ -62,6 +77,9 @@ export class FuelingComponent extends TranslateBase<Fueling> implements OnInit {
     )
   }
 
+  /**
+   * Leiratkozunk a figyelőkről.
+   */
   ngOnDestroy() {
     this.listSubscribe.unsubscribe();
     this.vSubscribe.unsubscribe();

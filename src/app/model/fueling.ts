@@ -1,3 +1,6 @@
+/**
+ * A Fuelink entitás modellje.
+ */
 export class Fueling {
   vehicleId: string;
   driverId: string;
@@ -5,6 +8,10 @@ export class Fueling {
   time: Date;
   amount: number;
 
+  /**
+   *
+   * @param options az új objektum alapértelmezett értékei.
+   */
   constructor(options: any = {}) {
     this.vehicleId = options.vehicleId || "";
     this.driverId = options.driverId || "";

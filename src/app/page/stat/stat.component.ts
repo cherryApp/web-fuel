@@ -14,6 +14,9 @@ import { ChartDataService } from '../../service/chart-data.service';
 import { TranslateBase } from '../../service/translate.base';
 import { ToastsManager } from 'ng2-toastr';
 
+/**
+ * A statisztikák megjelenítéséért felelős komponens.
+ */
 @Component({
   selector: 'app-stat',
   templateUrl: './stat.component.html',
@@ -21,23 +24,57 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class StatComponent extends TranslateBase<any> implements OnInit, OnDestroy, DoCheck {
 
+  /**
+   * A chart megjelenítő div referenciája.
+   */
   @ViewChild('cchart') myChart;
 
+  /**
+   * Az összes adatforrás.
+   */
   allData: any;
 
+  /**
+   * A feldolgozott adatotk a chart számára.
+   */
   pieChartData: any = {};
 
+  /**
+   * Sofőrök listája a kiválasztáshoz.
+   */
   driverList: Array<{key: string, label: string}> = [];
+
+  /**
+   * A szűrőfeltételeket tartalmazó objektum.
+   */
   filterObject = {
     driverID: 'notset',
     startDate: '',
     endDate: ''
   }
-  filterDiffer: any;
-  chartType: string = "PieChart";
-  zipSubscription: Subscription;
-  formObservable: Observable<any>;
 
+  /**
+   * A szűrőfeltételek módosulásainak figyelését végző objektum.
+   */
+  filterDiffer: any;
+
+  /**
+   * Az alapértelmezett chart típus.
+   */
+  chartType: string = "PieChart";
+
+  /**
+   * Összesített feliratkozás a listák változásaira.
+   */
+  zipSubscription: Subscription;
+
+  /**
+   *
+   * @param cService a chart adatainak szolgálatása.
+   * @param differs a különbségek figyelését végző szolgálatás.
+   * @param toaster toast üzenetek szolgáltatása.
+   * @param vcr a megjelenítő konténerének szolgáltatása.
+   */
   constructor(
     private cService: ChartDataService,
     private differs: KeyValueDiffers,
@@ -51,6 +88,10 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     this.filterDiffer = this.differs.find(this.filterObject).create();
   }
 
+  /**
+   * Inicializáláskor feliratkozunk a figyelt listák módosulásaira.
+   * Módosulás esetén újrageneráljuk a chart adatforrását.
+   */
   ngOnInit() {
     this.zipSubscription = this.cService.dataSubject
       .map( values => {
@@ -72,6 +113,10 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
 
   }
 
+  /**
+   * Az angular automatikus változás követése estén fut.
+   * Amikor ellenőrzi az Angular a komponenst, mi is ellenőrizzük a szűrőfeltételeket.
+   */
   ngDoCheck() {
     var changes = this.filterDiffer.diff(this.filterObject); // check for changes
     if (changes) {
@@ -84,10 +129,17 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     }
   }
 
+  /**
+   * Az öbjektum megszűnése estén töröljük a figyelőket.
+   */
   ngOnDestroy() {
     this.zipSubscription.unsubscribe();
   }
 
+  /**
+   * Legenerálja a chart adatforrását.
+   * Piechart és ColumnChart esetén különböző adatstruktúrát készít.
+   */
   createChartData(): void {
     if (!this.allData) return;
 
@@ -108,6 +160,10 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     this.pieChartData = chartData;
   }
 
+  /**
+   * Generálás során alkalmazza a szűrőfeltételeket.
+   * @param fuelings az összes tankolást tartalmazó tömb.
+   */
   applyFilters(fuelings: Array<any>): Array<any> {
     return fuelings.filter( item => {
       let out = true;
@@ -127,6 +183,9 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     });
   }
 
+  /**
+   * Egy sofőr tankolásait generálja listába.
+   */
   getConsumptionPerDriver(): Array<any> {
     let compared: Array<any> = [
       ['Names', 'Fuel Consumption']
@@ -139,6 +198,9 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     return compared;
   }
 
+  /**
+   * Az összes tankolás sofőrönkénti listáját generálja le.
+   */
   getFuelingsByDriver(): Array<any> {
     let fueling: Array<any> = [
       ['Időpont', 'Üzemanyag mennyisége']
@@ -158,6 +220,10 @@ export class StatComponent extends TranslateBase<any> implements OnInit, OnDestr
     return fueling;
   }
 
+  /**
+   * Visszaadja egy sofőr összes tankolását.
+   * @param driverKey a sofőr azonosítója az adatbázisban.
+   */
   getFueling(driverKey): any {
     let fueling: any = 0;
 

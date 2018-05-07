@@ -1,9 +1,15 @@
 import { Injectable } from "@angular/core";
 
+/**
+ * A fordításokat tartalmazó osztály.
+ */
 @Injectable()
 export class TranslateService {
   constructor() {}
 
+  /**
+   * Magyar fordítás kulcs - érték párjai.
+   */
   static huHU: {} = {
     lp: "rendszám",
     manufacturer: "gyártó",

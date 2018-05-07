@@ -7,6 +7,9 @@ import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 import { ToastsManager } from 'ng2-toastr';
 
+/**
+ * A Vehicle entitás kezelése.
+ */
 @Component({
   selector: 'app-vehicle',
   templateUrl: './vehicle.component.html',
@@ -14,6 +17,10 @@ import { ToastsManager } from 'ng2-toastr';
 })
 export class VehicleComponent extends TranslateBase<Vehicle>
   implements OnInit, OnDestroy {
+
+  /**
+   * A törlés jóváhagyását szolgáló panel forrása.
+   */
   deleteMessage: string = `
     <div><span>Biztosan törli?</span></div>
     <div class="row">
@@ -26,6 +33,9 @@ export class VehicleComponent extends TranslateBase<Vehicle>
     </div>
   `;
 
+  /**
+   * A táblázat oszlopainak beállítása.
+   */
   cols = [
     {key: "lp", type: "text"},
     {key: "manufacturer", type: "text"},
@@ -34,6 +44,13 @@ export class VehicleComponent extends TranslateBase<Vehicle>
     {key: "fuelType", type: "select", options: Fuels},
     {key: "year", type: "number"}
   ];
+
+  /**
+   *
+   * @param vService a járművek szolgáltatása.
+   * @param toaster toast üzenetek szolgáltatása.
+   * @param vcr a megjelenítő kontíner referenciája.
+   */
   constructor(
     private vService: VehicleService,
     toaster: ToastsManager,
@@ -45,13 +62,21 @@ export class VehicleComponent extends TranslateBase<Vehicle>
     this.list = vService.list;
   }
 
+  /**
+   * Feliratkozás a járművek listájára.
+   */
   ngOnInit() {
+    console.log("vehicle inited");
     this.listSubscribe = this.vService.all.subscribe(
       list => this.list = this.vService.list
     );
   }
 
+  /**
+   * Feliratkozások törlése.
+   */
   ngOnDestroy() {
+    console.log("vehicle destroyed");
     this.listSubscribe.unsubscribe();
   }
 }

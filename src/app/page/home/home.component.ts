@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * A főoldalért felelős komponens.
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

@@ -6,11 +6,25 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class VehicleService extends BaseService {
 
+  /**
+   * A távoli objektum végpontja.
+   */
   endPoint: string = "vehicle";
 
+  /**
+   * Lista opciók.
+   */
   vOptions: any[] = [];
+
+  /**
+   * Figyelhető objektum a változások megosztására.
+   */
   allOptions: Subject<any> = new Subject();
 
+  /**
+   * Példányosítás során feliratkozik a távoli adatbázis objektum módosulásaira.
+   * @param db a távoli adatbázis elérése.
+   */
   constructor(db: AngularFireDatabase) {
     super(db, 'vehicle');
     this.all.subscribe( list => {

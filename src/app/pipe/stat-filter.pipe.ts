@@ -1,5 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+/**
+ * A statisztikai adatok szűrésére szolgáló Pipe.
+ */
 @Pipe({
   name: 'statFilter'
 })

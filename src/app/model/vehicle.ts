@@ -1,3 +1,6 @@
+/**
+ * A Vehicle entitás modellje.
+ */
 export class Vehicle {
   lp: string;
   manufacturer: string;
@@ -6,6 +9,10 @@ export class Vehicle {
   fuelType: string;
   year: string;
 
+  /**
+   *
+   * @param options az új objektum alapértelmezett értékei.
+   */
   constructor(options: any = {}) {
     this.lp = options.lp || "";
     this.manufacturer = options.manufacturer || "";
@@ -16,6 +23,9 @@ export class Vehicle {
   }
 }
 
+/**
+ * Üzemanyagok típusainak tömbje.
+ */
 export const Fuels: string[] = [
   "diesel",
   "gasoline",

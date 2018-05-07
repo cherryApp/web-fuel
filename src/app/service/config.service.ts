@@ -4,7 +4,6 @@ import { HomeComponent } from '../page/home/home.component';
 import { FuelingComponent } from '../page/fueling/fueling.component';
 import { VehicleComponent } from '../page/vehicle/vehicle.component';
 import { StatComponent } from '../page/stat/stat.component';
-import { SettingsComponent } from '../page/settings/settings.component';
 import { DriverComponent } from '../page/driver/driver.component';
 import { LoginComponent } from '../login/login.component';
 import { Observable } from 'rxjs/Observable';
@@ -13,16 +12,29 @@ import { of } from 'rxjs/observable/of';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subject } from 'rxjs/Subject';
 
+/**
+ * A configurációs beállításokat szolgáltatja.
+ */
 @Injectable()
 export class ConfigService implements OnInit{
-  // Az Observable az alkalmazás online/offline állapotát figyeli.
+  /**
+   * Az Observable az alkalmazás online/offline állapotát figyeli.
+   */
   private online: Observable<any>;
+
+  /**
+   * Az alkalmazás online státuszát szolgáltatja.
+   */
   onlineStatus: Subject<boolean> = new Subject();
 
-  // Az alkalmazás címsorában megjelenő szöveg.
+  /**
+   * Az alkalmazás címsorában megjelenő szöveg.
+   */
   appTitle: string = "WebFuel";
 
-  // A teszteléshez használt felhasználó belépési adatai.
+  /**
+   * A teszteléshez használt felhasználó belépési adatai.
+   */
   testUser: {email: string, password: string} = {
     email: "info@webfuel.com",
     password: "webfuel"
@@ -51,7 +63,9 @@ export class ConfigService implements OnInit{
 
 }
 
-// Az útválasztás szabályai.
+/**
+ * Az útválasztás szabályai.
+ */
 export const AppRouting: Routes = [
   {
     path: "",
@@ -74,10 +88,6 @@ export const AppRouting: Routes = [
     component: StatComponent
   },
   {
-    path: "settings",
-    component: SettingsComponent
-  },
-  {
     path: "login",
     component: LoginComponent
   },
@@ -87,7 +97,11 @@ export const AppRouting: Routes = [
   },
 ];
 
-// Kapcsolati beállítsok a távoli firebase adatbázishoz.
+/**
+ * Kapcsolati beállítások a távoli firebase adatbázishoz.
+ * Ezek pulblikus kulcsok, nem lehet a segítségükkel a védett adatokhoz hozzáférni,
+ * csak bejelentkezés után.
+ */
 export const FirebaseSettings: any = {
   apiKey: "AIzaSyAKddTzM8ZzIIdzngqEk59pq7U-_IciQ5g",
   authDomain: "webfuel-dadff.firebaseapp.com",

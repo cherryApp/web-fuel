@@ -22,7 +22,6 @@ import { HomeComponent } from './page/home/home.component';
 import { VehicleComponent } from './page/vehicle/vehicle.component';
 import { FuelingComponent } from './page/fueling/fueling.component';
 import { StatComponent } from './page/stat/stat.component';
-import { SettingsComponent } from './page/settings/settings.component';
 import { VehicleService } from './service/vehicle.service';
 import { TransPipe } from './pipe/trans.pipe';
 import { TableComponent } from './table/table.component';
@@ -42,7 +41,6 @@ import { StatFilterPipe } from './pipe/stat-filter.pipe';
     VehicleComponent,
     FuelingComponent,
     StatComponent,
-    SettingsComponent,
     TransPipe,
     TableComponent,
     DriverComponent,
