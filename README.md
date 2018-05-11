@@ -7,10 +7,17 @@
 * Járművek, Sofőrök és Tankolások kezelése.
 * Adatok védelme adatbázis alapú authentikáció segítségével.
 
-# Készítők
+## Készítők
 * Szabó János
 * Szalánczy Róbert
 * Cserkó József
+
+## Felhasználói dokumentáció
+* Webfuel.docx
+
+## Fejlesztői dokumentáció
+* Webfuel_fejleszt.docx
+* [Online elérthető verzió](http://cherryapps.hu/webfuel/devdoc)
 
 # Documentáció generálása
 ```typedoc --module amd --out ../devdoc/ ./src/```
