@@ -1,6 +1,7 @@
 # web-fuel
 Üzemanyag nyilvántartó web-alkalmazás.
-## [Online demo](http://cherryapps.hu/webfuel)  
+## [Online demo](http://cherryapps.hu/webfuel) 
+Belépés: info@webfuel.com/webfuel 
 
 ## Az alkalmazás céljai
 * Üzemanyag nyilvántartó rendszer készítése.
